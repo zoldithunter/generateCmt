@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+	<script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+	<div>
+		Choose rule file: <input type="file" id="loadRule" onchange="loadRule(this)">
+	</div>
+	<br />
+	<table id="body">
+		<tr>
+			<td>Rule1:</td>
+			<td><input id="rule1" name="rule" value="{game}"></td>
+			<td><input id="text1" name="value"></td>
+		</tr>
+		<tr>
+			<td>Rule2:</td>
+			<td><input id="rule2" name="rule" value="{name}"></td>
+			<td><input id="text2" name="value"></td>
+		</tr>
+		<tr>
+			<td>Rule3:</td>
+			<td><input id="rule3" name="rule" value="{sex}"></td>
+			<td><input id="text3" name="value"></td>
+		</tr>
+	</table>
+	<br />
+	<table>
+		<tr>
+			<td>Get number comment:</td>
+			<td><input type="number" id="number" min="1"></td>
+		</tr>
+		<tr>
+			<td colspan="3">Choose data file: <input type="file" id="loadData"></td>
+		</tr>
+		<tr>
+			<td colspan="3"><input type="button" id="run" value="Run"></td>
+		</tr>
+		<tr>
+			<td colspan="3"><p id="demo"></p></td>
+		</tr>
+	</table>
+	<br />
+	<textarea id="output" rows="10" cols="50"></textarea>
+</body>
+</html>

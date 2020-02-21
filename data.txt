@@ -1,0 +1,5 @@
+Em chào {name}
+{name} có khỏe không ạ?
+Tuyệt vời quá {sex} {name}
+{sex} chơi {game} hay quá
+{sex} {name} kết bạn với em đi
