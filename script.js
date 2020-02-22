@@ -40,7 +40,9 @@ function getRandomArray(number, maxNumber){
 function replaceByRule(content, listRule, listData){
     var tmp = content;
     for (var i = 0; i < listRule.length; i++) {
-        tmp = tmp.replace(listRule[i], listData[i]);
+      var eles = listData[i].split('|');
+      let random = Math.floor(Math.random() * eles.length) + 1;
+      tmp = tmp.replace(listRule[i], eles[random - 1]);
     }
     return tmp;
 }
@@ -61,7 +63,10 @@ function loadRule(file) {
     reader.onload = function(progressEvent) {
         let lines = this.result.split('\n');
         for (var i =1; i<= lines.length; i++) {
-            $('#body').append("<tr><td>Rule" + i + ":</td><td><input id = 'rule" + i + "' name='rule' value='" + lines[i-1] +"'></td><td><input id = 'text" + i +"' name='value' ></td></tr>");
+          let line = lines[i-1].split('|');
+          let rule = line.splice(0,1);
+          let data = line.join("|");
+          $('#body').append("<tr><td>Rule" + i + ":</td><td><input id = 'rule" + i + "' name='rule' value='" + rule +"'></td><td><input id = 'text" + i +"' name='value' value='"+data+"' ></td></tr>");
         }
     }
     reader.readAsText(file.files[0]);
