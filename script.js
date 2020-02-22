@@ -1,20 +1,26 @@
 var _listRule = [];
-var _listData = [];
 $( document ).ready(function() {
+
+    // readTextFile("rule.txt");
+    loadXMLDoc();
+
     $('#run').click(function(){
         let fileData = document.getElementById('loadData').files[0];
-
         if (fileData) {
-            getRuleAndData();
+            getRule();
             let reader = new FileReader();
-            let number = parseInt($('#number').val());
+            var number = parseInt($('#number').val());
+            if (number < 1) {
+                number = 1;
+                $('#number').val(1);
+            }
             reader.onload = function(progressEvent) {
                 let lines = this.result.split('\n');
                 var listOutput = getRandomArray(number, lines.length);
                 
                 var listOutputContents = [];
                 [...listOutput].forEach((element, index) => {
-                    listOutputContents.push(replaceByRule(lines[element], _listRule, _listData));
+                    listOutputContents.push(replaceByRule(lines[element], _listRule));
                 })
 
                 $('#output').val(listOutputContents.join("\n"));
@@ -35,23 +41,24 @@ function getRandomArray(number, maxNumber){
     return arr;
 }
 
-function replaceByRule(content, listRule, listData){
+function replaceByRule(content, listRule){
     var tmp = content;
-    [...listRule].forEach((ele, idx) => {
-        let eles = listData[idx].split('|');
+    [...listRule].forEach((ele) => {
+        let eles = ele.value.split('|');
         let random = Math.floor(Math.random() * eles.length);
-        tmp = tmp.replace(ele, eles[random]);
+        tmp = tmp.replace(ele.rule, eles[random]);
     })
     return tmp;
 }
 
-function getRuleAndData() {
+function getRule() {
     _listRule = [];
-    _listData = [];
     let countRule = $("input[name='rule']");
     [...countRule].forEach((ele, idx) => {
-        _listRule.push($("#rule" + idx).val());
-        _listData.push($("#text" + idx).val());
+        _listRule.push({ 
+            rule:   $("#rule" + idx).val() , 
+            value:  $("#text" + idx).val()
+        });
     })
 }
 
@@ -68,4 +75,32 @@ function loadRule(file) {
         })
     }
     reader.readAsText(file.files[0]);
+}
+
+function readTextFile(filePath)
+{
+    let file = new File(["string"], filePath);
+    let reader = new FileReader();
+    reader.onload = function(progressEvent) {
+        let lines = this.result.split('\n');
+        console.log(lines);
+    }
+    reader.readAsText(file);
+}
+
+function loadXMLDoc() {
+var xmlhttp;
+if (window.XMLHttpRequest) {
+xmlhttp = new XMLHttpRequest();
+} else {
+// code for older browsers
+xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+}
+xmlhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+console.log(this.responseText);
+}
+};
+xmlhttp.open("GET", "rule.txt", true);
+xmlhttp.send();
 }
