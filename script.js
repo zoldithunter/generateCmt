@@ -13,10 +13,9 @@ $( document ).ready(function() {
                 var listOutput = getRandomArray(number, lines.length);
                 
                 var listOutputContents = [];
-                for (var ii =0; ii < listOutput.length; ii++) {
-                    let tmpContent = lines[listOutput[ii]-1];
-                    listOutputContents.push(replaceByRule(tmpContent, _listRule, _listData));
-                }
+                [...listOutput].forEach((element, index) => {
+                    listOutputContents.push(replaceByRule(lines[element], _listRule, _listData));
+                })
 
                 $('#output').val(listOutputContents.join("\n"));
             }
@@ -30,8 +29,7 @@ $( document ).ready(function() {
 function getRandomArray(number, maxNumber){
     var arr = [];
     while(arr.length < number){
-        var r = Math.floor(Math.random() * maxNumber) + 1;
-        // if(arr.indexOf(r) === -1) arr.push(r);
+        var r = Math.floor(Math.random() * maxNumber);
         arr.push(r);
     }
     return arr;
@@ -39,22 +37,22 @@ function getRandomArray(number, maxNumber){
 
 function replaceByRule(content, listRule, listData){
     var tmp = content;
-    for (var i = 0; i < listRule.length; i++) {
-      var eles = listData[i].split('|');
-      let random = Math.floor(Math.random() * eles.length) + 1;
-      tmp = tmp.replace(listRule[i], eles[random - 1]);
-    }
+    [...listRule].forEach((ele, idx) => {
+        let eles = listData[idx].split('|');
+        let random = Math.floor(Math.random() * eles.length);
+        tmp = tmp.replace(ele, eles[random]);
+    })
     return tmp;
 }
 
 function getRuleAndData() {
     _listRule = [];
     _listData = [];
-    let countRule = $("input[name='rule']").length;
-    for(var i = 1; i<= countRule; i++) {
-        _listRule.push($("#rule" + i).val());
-        _listData.push($("#text" + i).val());
-    }
+    let countRule = $("input[name='rule']");
+    [...countRule].forEach((ele, idx) => {
+        _listRule.push($("#rule" + idx).val());
+        _listData.push($("#text" + idx).val());
+    })
 }
 
 function loadRule(file) {
@@ -62,12 +60,12 @@ function loadRule(file) {
     let reader = new FileReader();
     reader.onload = function(progressEvent) {
         let lines = this.result.split('\n');
-        for (var i =1; i<= lines.length; i++) {
-          let line = lines[i-1].split('|');
-          let rule = line.splice(0,1);
-          let data = line.join("|");
-          $('#body').append("<tr><td>Rule" + i + ":</td><td><input id = 'rule" + i + "' name='rule' value='" + rule +"'></td><td><input id = 'text" + i +"' name='value' value='"+data+"' ></td></tr>");
-        }
+        [...lines].forEach((ele, i) => {
+            let line = lines[i].split('|');
+            let rule = line.splice(0,1);
+            let data = line.join("|");
+            $('#body').append("<tr><td>Rule" + (i + 1) + ":</td><td><input id = 'rule" + i + "' name='rule' value='" + rule +"'></td><td><input id = 'text" + i +"' name='value' value='"+data+"' ></td></tr>");
+        })
     }
     reader.readAsText(file.files[0]);
 }

@@ -1,4 +1,3 @@
-{name}
-{sex}
-{game}
-{rule1}
+{name}|duy|linh|le|son
+{sex}|anh
+{game}|Pupg1
