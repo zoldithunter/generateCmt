@@ -31,7 +31,8 @@ function getRandomArray(number, maxNumber){
     var arr = [];
     while(arr.length < number){
         var r = Math.floor(Math.random() * maxNumber) + 1;
-        if(arr.indexOf(r) === -1) arr.push(r);
+        // if(arr.indexOf(r) === -1) arr.push(r);
+        arr.push(r);
     }
     return arr;
 }
