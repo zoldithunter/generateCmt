@@ -21,7 +21,7 @@ $( document ).ready(function() {
                 })
 
                 $('#output1').val(listOutputContents.join("\n"));
-                $('#output1').val(listOutputContents.join("|"));
+                $('#output2').val(listOutputContents.join("|"));
             }
             reader.readAsText(fileData);
         } else {
