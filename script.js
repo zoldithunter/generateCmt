@@ -20,7 +20,8 @@ $( document ).ready(function() {
                     listOutputContents.push(replaceByRule(lines[element], _listRule));
                 })
 
-                $('#output').val(listOutputContents.join("\n"));
+                $('#output1').val(listOutputContents.join("\n"));
+                $('#output1').val(listOutputContents.join("|"));
             }
             reader.readAsText(fileData);
         } else {
