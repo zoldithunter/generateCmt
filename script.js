@@ -20,8 +20,10 @@ $( document ).ready(function() {
                     listOutputContents.push(replaceByRule(lines[element], _listRule));
                 })
 
+                $('#output2').text(listOutputContents.join("|"));
+                var elmnt = document.getElementById("output2");
+                elmnt.scrollIntoView();
                 $('#output1').val(listOutputContents.join("\n"));
-                $('#output1').val(listOutputContents.join("|"));
             }
             reader.readAsText(fileData);
         } else {
